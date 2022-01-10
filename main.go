@@ -35,31 +35,21 @@ func main() {
 			asciiChrs[dec] = append(asciiChrs[dec], line)
 		}
 	}
-
-	args := os.Args[1]
-
-	for i := 0; i < len(args); i++ {
-		if args[i] == 92 && args[i+1] == 110 {
-			Newline(string(args[:i]), asciiChrs)
-			Newline(string(args[i+2:]), asciiChrs)
-
-		}
-	}
-
-	if strings.Contains(args, "\\n") == false {
-		Newline(args, asciiChrs)
-	}
-
+	// string that user inputs
+	userInput := os.Args[1]
+	Newline(userInput, asciiChrs)
 }
 
+// Newline function prints string horizontally and with new line if user specifies
 func Newline(n string, y map[int][]string) {
-
-	//prints horizontally
-
-	for j := 0; j < len(y[32]); j++ {
-		for _, letter := range n {
-			fmt.Print(y[int(letter)][j])
+	replaceNewline := strings.ReplaceAll(n, "\\n", "\n")
+	wordsSlice := strings.Split(replaceNewline, "\n")
+	for _, word := range wordsSlice {
+		for j := 0; j < len(y[32]); j++ {
+			for _, letter := range word {
+				fmt.Print(y[int(letter)][j])
+			}
+			fmt.Println()
 		}
-		fmt.Println()
 	}
 }
